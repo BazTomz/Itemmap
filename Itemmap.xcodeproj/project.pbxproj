@@ -14,8 +14,6 @@
 		BA9D4A582A8B9D460001E507 /* ItemmapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4A572A8B9D460001E507 /* ItemmapTests.swift */; };
 		BA9D4A622A8B9D460001E507 /* ItemmapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4A612A8B9D460001E507 /* ItemmapUITests.swift */; };
 		BA9D4A642A8B9D460001E507 /* ItemmapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4A632A8B9D460001E507 /* ItemmapUITestsLaunchTests.swift */; };
-		BA9D4B312A94ADE70001E507 /* CameraCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4B302A94ADE70001E507 /* CameraCaptureView.swift */; };
-		BA9D4B342A94E2CB0001E507 /* FoundItemFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4B332A94E2CB0001E507 /* FoundItemFormView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,9 +44,6 @@
 		BA9D4A5D2A8B9D460001E507 /* ItemmapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItemmapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9D4A612A8B9D460001E507 /* ItemmapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemmapUITests.swift; sourceTree = "<group>"; };
 		BA9D4A632A8B9D460001E507 /* ItemmapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemmapUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		BA9D4B302A94ADE70001E507 /* CameraCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCaptureView.swift; sourceTree = "<group>"; };
-		BA9D4B322A94D7320001E507 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		BA9D4B332A94E2CB0001E507 /* FoundItemFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundItemFormView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,11 +94,8 @@
 		BA9D4A452A8B9D450001E507 /* Itemmap */ = {
 			isa = PBXGroup;
 			children = (
-				BA9D4B322A94D7320001E507 /* Info.plist */,
 				BA9D4A462A8B9D450001E507 /* ItemmapApp.swift */,
 				BA9D4A482A8B9D450001E507 /* ContentView.swift */,
-				BA9D4B302A94ADE70001E507 /* CameraCaptureView.swift */,
-				BA9D4B332A94E2CB0001E507 /* FoundItemFormView.swift */,
 				BA9D4A4A2A8B9D460001E507 /* Assets.xcassets */,
 				BA9D4A4C2A8B9D460001E507 /* Preview Content */,
 			);
@@ -265,10 +257,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA9D4B342A94E2CB0001E507 /* FoundItemFormView.swift in Sources */,
 				BA9D4A492A8B9D450001E507 /* ContentView.swift in Sources */,
 				BA9D4A472A8B9D450001E507 /* ItemmapApp.swift in Sources */,
-				BA9D4B312A94ADE70001E507 /* CameraCaptureView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,9 +420,6 @@
 				DEVELOPMENT_TEAM = 4J5H2668H9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Itemmap/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,9 +449,6 @@
 				DEVELOPMENT_TEAM = 4J5H2668H9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Itemmap/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
