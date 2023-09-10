@@ -15,6 +15,10 @@ struct ContentView: View {
     @State private var isShowNextView = false
     //ボタンの状態の変数
     @State private var isButtonPressed = false
+    // カメラの起動状態を管理
+    @State private var isCameraActive = false
+    // 撮影した画像を保持
+    @State private var capturedImage: UIImage? = nil
     
     var body: some View {
         //マップのとボタン類を重ねて表示
@@ -34,6 +38,7 @@ struct ContentView: View {
                     //bool値を反転（トグル）
                     isButtonPressed.toggle()
                     isShowNextView = true
+                    isCameraActive = true
                 }) {
                 //ボタンの表示
                      ZStack {
@@ -55,6 +60,14 @@ struct ContentView: View {
                 }
                 //ボタンに影をつける
                 .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+                
+                //カメラを起動
+                //.sheetモディファイア:ビューのシート表示, 引数としてisPresentedを取る
+                //isShowNextViewの値が trueのとき、指定された CameraCaptureViewがシートとして表示される
+                //CameraCaptureViewにisActiveとcapturedImageという2つのバインディングを引数として渡す
+                .sheet(isPresented: $isShowNextView) {
+                    CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage)
+                }
             }
         }
     }
