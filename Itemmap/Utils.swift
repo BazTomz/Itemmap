@@ -17,5 +17,7 @@ struct Utils {
     //スクリーンサイズ
     static let screenWidth = UIScreen.main.bounds.width
     static let screenHeight = UIScreen.main.bounds.height
+    //ボタンサイズ
+    static let buttonsize = UIScreen.main.bounds.width * 0.15
 }
 
