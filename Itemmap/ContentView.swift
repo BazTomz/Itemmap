@@ -38,56 +38,69 @@ struct ContentView: View {
     var body: some View {
         //マップのとボタン類を重ねて表示
         ZStack {
-            //マップを表示・初期表示位置の設定
-            MapView(
-                initialCoordinate: $initialCoordinate,
-                userLocation: $locationManager.userLocation,
-                region: $region,
-                mapNeedsUpdate: $mapNeedupdate
-            )
-                .edgesIgnoringSafeArea(.all)
-            
-            //ボタンを下部に配置
-            VStack {
-                // 700ポイントの高さのスペース
-                Spacer()
-                    .frame(height:700)
+            //全体の背景色
+            Color.white
+            // セーフエリアを無視して背景色を設定
+            .edgesIgnoringSafeArea(.all)
                 
-                // +ボタンの配置と押下時のアクション
-                Button(action: {
-                    //bool値を反転（トグル）
-                    isButtonPressed.toggle()
-                    isShowNextView = true
-                    isCameraActive = true
-                }) {
-                //ボタンの表示
-                     ZStack {
-                        Circle()
-                        //塗りつぶし
-                            .fill(Color.pink)
-                        //円の外周の枠線
-                            .overlay(
-                                Circle()
-                                //枠線の色と幅を指定
-                                    .strokeBorder(Color.white, lineWidth: 3)
-                            )
-                        //ボタンにSFSymbols画像の表示
-                        Image(systemName:"mappin")
-                            .font(.system(size: 30))
-                            .foregroundColor(.white)
-                            .padding()
+            VStack{
+                // スペースを追加して上部にスペースを設ける
+                Spacer()
+                    .frame(height: 20) // 適切な高さに調整
+                //マップを表示・初期表示位置の設定
+                MapView(
+                    initialCoordinate: $initialCoordinate,
+                    userLocation: $locationManager.userLocation,
+                    region: $region,
+                    mapNeedsUpdate: $mapNeedupdate
+                )
+                //.edgesIgnoringSafeArea(.all)
+                
+                ZStack{
+                    // 下部のスペース
+                    Rectangle()
+                        .fill(Color.clear) // 赤い背景色を設定
+                        .frame(height: 50) // 適切な高さに調整
+                    // +ボタンの配置と押下時のアクション
+                    Button(action: {
+                        //bool値を反転（トグル）
+                        isButtonPressed.toggle()
+                        isShowNextView = true
+                        isCameraActive = true
+                    }) {
+                    //ボタンの表示
+                         ZStack {
+                            Circle()
+                            //塗りつぶし
+                                .fill(Color.black)
+                            //ボタンサイズ
+                                .frame(width: 70, height: 70)
+                            //円の外周の枠線
+                                .overlay(
+                                    Circle()
+                                    //枠線の色と幅を指定
+                                        .strokeBorder(Color.white, lineWidth: 3)
+                                )
+                            //ボタンにSFSymbols画像の表示
+                            Image(systemName:"plus")
+                                .font(.system(size: 20))
+                                .foregroundColor(.white)
+                                .padding()
+                        }
+                    }
+                    //ボタンに影をつける
+                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+                    
+                    //カメラを起動
+                    //.sheetモディファイア:ビューのシート表示, 引数としてisPresentedを取る
+                    //isShowNextViewの値が trueのとき、指定された CameraCaptureViewがシートとして表示される
+                    //CameraCaptureViewにisActiveとcapturedImageという2つのバインディングを引数として渡す
+                    .sheet(isPresented: $isShowNextView) {
+                        CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage)
                     }
                 }
-                //ボタンに影をつける
-                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
                 
-                //カメラを起動
-                //.sheetモディファイア:ビューのシート表示, 引数としてisPresentedを取る
-                //isShowNextViewの値が trueのとき、指定された CameraCaptureViewがシートとして表示される
-                //CameraCaptureViewにisActiveとcapturedImageという2つのバインディングを引数として渡す
-                .sheet(isPresented: $isShowNextView) {
-                    CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage)
-                }
+                
             }
         }
     }

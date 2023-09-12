@@ -48,7 +48,13 @@ struct MapView: UIViewRepresentable{
         
         // 「現在地に戻る」ボタンを作成
         let returnButton = UIButton(type: .system)
-        returnButton.setTitle("現在地に戻る", for: .normal)
+        returnButton.backgroundColor = .white // 背景色を白に設定
+        
+        returnButton.frame = CGRect(x: Utils.screenWidth / 4, y: Utils.screenHeight / 4, width: 100, height: 100) // ボタンの幅と高さを設定
+        returnButton.layer.cornerRadius = returnButton.frame.width / 2 // 丸い形状にするために角丸を設定
+        returnButton.clipsToBounds = true // ボタンの枠外の部分をクリップ
+        returnButton.setImage(UIImage(systemName: "location"), for: .normal)
+        //returnButton.setTitle("現在地に戻る", for: .normal)
         returnButton.addTarget(context.coordinator, action: #selector(Coordinator.returnToUserLocation), for: .touchDown)
         
         // ボタンをマップビューの上に配置
