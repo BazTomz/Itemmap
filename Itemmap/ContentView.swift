@@ -20,8 +20,7 @@ struct ContentView: View {
     @State private var isCameraActive = false
     // 撮影した画像を保持
     @State private var capturedImage: UIImage? = nil
-    
-    //位置情報関連
+    //位置情報の更新するかどうか（現在地に戻るかどうか）※バインディング
     @State private var mapNeedupdate = false
     // 初期現在地はとりあえず瀬田
     @State private var initialCoordinate = CLLocationCoordinate2D(latitude: 35.0239, longitude: 135.8748)
@@ -61,7 +60,9 @@ struct ContentView: View {
                         Spacer()
                         VStack{
                             Button(action: {
-                                //アクションの追加
+                                //ここにアクションを追加
+                                //mapNeedsUpdateというバインディングを介してMapViewのupdateUIView関数を呼び出す
+                                mapNeedupdate = true
                             }){
                                 //ボタンの表示
                                 ZStack {
