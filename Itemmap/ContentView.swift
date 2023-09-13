@@ -126,8 +126,10 @@ struct ContentView: View {
                     //.sheetモディファイア:ビューのシート表示, 引数としてisPresentedを取る
                     //isShowNextViewの値が trueのとき、指定された CameraCaptureViewがシートとして表示される
                     //CameraCaptureViewにisActiveとcapturedImageという2つのバインディングを引数として渡す
+                    //userLocation（撮影場所）, capturedData（撮影日時） という2つのバインディングも追加（投稿画面作成時に追加）
                     .sheet(isPresented: $isShowNextView) {
-                        CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage)
+                        //CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage)
+                        CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage, userLocation: $locationManager.userLocation, capturedDate: "")
                     }
                 }
                 
