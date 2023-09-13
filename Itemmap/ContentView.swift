@@ -129,7 +129,7 @@ struct ContentView: View {
                     //isShowNextViewの値が trueのとき、指定された CameraCaptureViewがシートとして表示される
                     //CameraCaptureViewにisActiveとcapturedImageという2つのバインディングを引数として渡す
                     .sheet(isPresented: $isShowNextView) {
-                        CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage)
+                        CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage, capturedLocation: $locationManager.userLocation, capturedDate: "")
                     }
                 }
                 

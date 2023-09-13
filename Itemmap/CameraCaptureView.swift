@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import UIKit
+import Photos
 
 //CameraCaptureView という名前の UIViewControllerRepresentable プロトコルに準拠する構造体を宣言
 struct CameraCaptureView: UIViewControllerRepresentable {
@@ -17,6 +18,10 @@ struct CameraCaptureView: UIViewControllerRepresentable {
     //①capturedImage に画像データが存在する場合:UIImage型の有効なインスタンスが格納
     //②capturedImage が nil の場合:画像データが存在しないことを示すためnil が格納
     @Binding var capturedImage: UIImage?
+    
+    @Binding var capturedLocation: CLLocationCoordinate2D?
+    
+    @State var capturedDate: String
     
     //Coordinator クラスの定義
     //NSObject: Swift のクラスであることを示す基本的なプロトコル
@@ -42,6 +47,19 @@ struct CameraCaptureView: UIViewControllerRepresentable {
         //辞書内のキー（InfoKey 列挙型の要素）を使って画像に関連する情報にアクセス
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             
+            // 撮影時に得られるデータから撮影日時を抜き出す
+            if let metadata = info[.mediaMetadata] as? [String: Any] {
+                print("yes 1")
+                if let tiffInfo = metadata["{TIFF}"] as? [String: Any],
+                   let dateTimeOriginal = tiffInfo["DateTime"] as? String {
+                    //print("撮影日時: \(dateTimeOriginal)")
+                    
+                    parent.capturedDate = dateTimeOriginal
+                }
+            }
+
+            
+            
             //辞書から .originalImage（撮影された元の画像データを含むオブジェクト）キーに対応する値を取り出し
             //'as? 変換したい型'でキャスト（型変換）、オプショナル型を使用した安全なキャストを行う、キャスト成功→変換された値が代入、キャスト失敗→nil が代入
             //取り出した値を UIImage 型にダウンキャスト
@@ -56,7 +74,7 @@ struct CameraCaptureView: UIViewControllerRepresentable {
             parent.isActive = false
             
             // 写真を使用ボタンが押されたら、FoundItemFormView に遷移する
-            let viewController = UIHostingController(rootView: FoundItemFormView(capturedImage: parent.$capturedImage))
+            let viewController = UIHostingController(rootView: FoundItemFormView(capturedImage: parent.$capturedImage, capturedLocation: parent.$capturedLocation, capturedDate: parent.$capturedDate))
             picker.present(viewController, animated: true, completion: nil)
         }
         // キャンセル時の処理
