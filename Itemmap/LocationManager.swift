@@ -42,3 +42,4 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         userLocation = location
     }
 }
+

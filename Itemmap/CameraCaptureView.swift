@@ -17,11 +17,14 @@ struct CameraCaptureView: UIViewControllerRepresentable {
     //UIImage は画像データを表すクラスであり、UIImage? 型はその画像データが存在するかどうかを示す
     //①capturedImage に画像データが存在する場合:UIImage型の有効なインスタンスが格納
     //②capturedImage が nil の場合:画像データが存在しないことを示すためnil が格納
-    @Binding var capturedImage: UIImage?
+    //@Binding var capturedImage: UIImage?
+    @State private var capturedImage: UIImage? = nil
     
     // 投稿画面作成時に追加した2つのデータ
     @Binding var userLocation: CLLocationCoordinate2D?
-    @State var capturedDate: String
+        //@State var capturedDate: String
+        //Date型に変更
+    //@State var capturedDate: Date
     
     //Coordinator クラスの定義
     //NSObject: Swift のクラスであることを示す基本的なプロトコル
@@ -46,17 +49,19 @@ struct CameraCaptureView: UIViewControllerRepresentable {
         //infoパラメータ: didFinishPickingMediaWithInfo メソッドのパラメータ、画像に関する情報が辞書形式で渡される
         //辞書内のキー（InfoKey 列挙型の要素）を使って画像に関連する情報にアクセス
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            
+            //撮影日時取得
+            //parent.capturedDate = Date()
+            /*
             //投稿画面作成時に追加⇩ここから
             // 撮影時に得られるデータから撮影日時を抜き出す
             if let metadata = info[.mediaMetadata] as? [String: Any] {
                 if let tiffInfo = metadata["{TIFF}"] as? [String: Any],
-                   let dateTimeOriginal = tiffInfo["DateTime"] as? String {
+                   let dateTimeOriginal = tiffInfo["DateTime"] as? Date {
                     parent.capturedDate = dateTimeOriginal
                 }
             }
             //⇧ここまで
-            
+            */
             //辞書から .originalImage（撮影された元の画像データを含むオブジェクト）キーに対応する値を取り出し
             //'as? 変換したい型'でキャスト（型変換）、オプショナル型を使用した安全なキャストを行う、キャスト成功→変換された値が代入、キャスト失敗→nil が代入
             //取り出した値を UIImage 型にダウンキャスト
@@ -72,8 +77,9 @@ struct CameraCaptureView: UIViewControllerRepresentable {
             
             // 写真を使用ボタンが押されたら、FoundItemFormView に遷移する
             // 写真、撮影場所、撮影日時をバインディング（投稿画面作成時に追加）
-            let viewController = UIHostingController(rootView: FoundItemFormView(capturedImage: parent.$capturedImage, capturedLocation: parent.$userLocation, capturedDate: parent.$capturedDate))
-            //let viewController = UIHostingController(rootView: FoundItemFormView(capturedImage: parent.$capturedImage))
+            //let viewController = UIHostingController(rootView: FoundItemFormView(capturedImage: parent.$capturedImage, capturedLocation: parent.$userLocation, capturedDate: parent.$capturedDate))
+            //写真、撮影場所をバインディング
+            let viewController = UIHostingController(rootView: FoundItemFormView(capturedImage: parent.$capturedImage, capturedLocation: parent.$userLocation))
             picker.present(viewController, animated: true, completion: nil)
         }
         // キャンセル時の処理

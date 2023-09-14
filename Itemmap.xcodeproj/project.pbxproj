@@ -19,6 +19,7 @@
 		BA9D4B382AAEFA1C0001E507 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4B372AAEFA1C0001E507 /* LocationManager.swift */; };
 		BA9D4B3A2AAF437D0001E507 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4B392AAF437C0001E507 /* MapView.swift */; };
 		BA9D4B3E2AAF5C270001E507 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4B3D2AAF5C270001E507 /* Utils.swift */; };
+		BA9D4B402AB2BF6F0001E507 /* Mappin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4B3F2AB2BF6F0001E507 /* Mappin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		BA9D4B372AAEFA1C0001E507 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		BA9D4B392AAF437C0001E507 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		BA9D4B3D2AAF5C270001E507 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		BA9D4B3F2AB2BF6F0001E507 /* Mappin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				BA9D4B302A94ADE70001E507 /* CameraCaptureView.swift */,
 				BA9D4B332A94E2CB0001E507 /* FoundItemFormView.swift */,
 				BA9D4B372AAEFA1C0001E507 /* LocationManager.swift */,
+				BA9D4B3F2AB2BF6F0001E507 /* Mappin.swift */,
 				BA9D4B3D2AAF5C270001E507 /* Utils.swift */,
 				BA9D4A4A2A8B9D460001E507 /* Assets.xcassets */,
 				BA9D4A4C2A8B9D460001E507 /* Preview Content */,
@@ -278,6 +281,7 @@
 				BA9D4B3A2AAF437D0001E507 /* MapView.swift in Sources */,
 				BA9D4A492A8B9D450001E507 /* ContentView.swift in Sources */,
 				BA9D4B3E2AAF5C270001E507 /* Utils.swift in Sources */,
+				BA9D4B402AB2BF6F0001E507 /* Mappin.swift in Sources */,
 				BA9D4B382AAEFA1C0001E507 /* LocationManager.swift in Sources */,
 				BA9D4A472A8B9D450001E507 /* ItemmapApp.swift in Sources */,
 				BA9D4B312A94ADE70001E507 /* CameraCaptureView.swift in Sources */,
@@ -439,7 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Itemmap/Preview Content\"";
-				DEVELOPMENT_TEAM = Z3WJWLUGN7;
+				DEVELOPMENT_TEAM = 4J5H2668H9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Itemmap/Info.plist;
@@ -471,7 +475,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Itemmap/Preview Content\"";
-				DEVELOPMENT_TEAM = Z3WJWLUGN7;
+				DEVELOPMENT_TEAM = 4J5H2668H9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Itemmap/Info.plist;

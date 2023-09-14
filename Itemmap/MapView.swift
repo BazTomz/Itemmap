@@ -4,9 +4,7 @@
 //
 //  Created by momoe goto on 2023/09/11.
 //
-
-// commit仮
-
+/*
 import SwiftUI
 import MapKit
 import UIKit
@@ -34,8 +32,12 @@ struct MapView: UIViewRepresentable{
         // MKMapViewのインスタンスを作成
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
-        // ユーザーの現在位置を表示
+        // ユーザーの現在位置ポインタを表示
         mapView.showsUserLocation = true
+        //地図の中心がユーザの現在地に移動（必要かわからん）
+        //mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+        //ユーザの移動に合わせて地図の中心点を追従
+        mapView.userTrackingMode = .follow
         
         if let userLocation = userLocation {
             // 現在地を中心とした表示領域を設定
@@ -45,6 +47,7 @@ struct MapView: UIViewRepresentable{
             )
             mapView.setRegion(region, animated: true)
         }
+         
         // 作成したMKMapViewを返す
         return mapView
     }
@@ -83,12 +86,6 @@ struct MapView: UIViewRepresentable{
            self.parent = parent
        }
        // 他の地図関連のイベントハンドリングを追加できます
-    }
-}
-/*
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView()
     }
 }
 */
