@@ -17,6 +17,9 @@ struct FoundItemFormView: View {
     @State var capturedDate: Date = Date()
     @State private var userInput: String = ""
     @State private var isMapViewActive = false
+    
+    //日時を格納するプロパティ
+    @State private var postDate: String = ""
     // 住所情報を格納するプロパティ
     @State private var locationAddress: String = ""
     
@@ -47,13 +50,15 @@ struct FoundItemFormView: View {
        formatter.dateFormat = "yyyy年MM月dd日 HH時mm分"
        return formatter
    }()
+    
+    
     // 画像、撮影場所、撮影日時、入力欄、「投稿」ボタンを縦に配置
     var body: some View {
         NavigationView {
             //左揃え
             VStack(alignment: .leading){
                 //Text("日時: \(capturedDate)")
-                Text("日時　\(dateFormatter.string(from: capturedDate))")
+                Text("日時　\(postDate)")
                 
                 if !locationAddress.isEmpty {
                     Text("場所　\(locationAddress)")
@@ -94,7 +99,7 @@ struct FoundItemFormView: View {
                 }
                 .fullScreenCover(isPresented: $isMapViewActive) {
                     //ContentView(itemImage: $capturedImage, itemLocation: $capturedLocation)
-                    ContentView(itemImage: $capturedImage, itemSpot: $itemSpot)
+                    ContentView(itemImage: $capturedImage, itemSpot: $itemSpot, userInput: $userInput, postDate: $postDate)
                         .onAppear{
                             // capturedLocationがnilでない場合に、itemSpotに新しいItemSpotオブジェクトを追加
                             if let location = capturedLocation {
@@ -106,9 +111,11 @@ struct FoundItemFormView: View {
             }
             .padding()
             .onAppear {
+                postDate = dateFormatter.string(from: capturedDate)
                 if let location = capturedLocation {
                     reverseGeocodeLocation(location)
                 }
+                
             }
             .navigationBarTitle("落とし物投稿フォーム", displayMode: .inline)
         }

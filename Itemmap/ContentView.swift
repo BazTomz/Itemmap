@@ -11,10 +11,28 @@ import MapKit
 //import UIKit
 import CoreLocation
 
+
+/*
+struct callout: ViewModifier {
+    let color: Color
+    
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundColor(.white)
+            .padding()
+            .background(color)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+}
+*/
+
 //ContentViewという名前のViewを定義
 struct ContentView: View {
     @Binding var itemImage: UIImage?
     @Binding var itemSpot: [ItemSpot]
+    @Binding var userInput: String
+    @Binding var postDate: String
     
     //画面遷移させるかさせないかの変数
     @State private var isShowNextView = false
@@ -69,7 +87,15 @@ struct ContentView: View {
             )
         }
     }
-    //@State private var showCallout = false
+    
+    @State private var showCallout = false
+
+
+
+    
+    
+    
+    
     
     var body: some View {
         //マップのとボタン類を重ねて表示
@@ -97,36 +123,66 @@ struct ContentView: View {
                         userTrackingMode: $userTrackingMode,
                         //マーカの指定
                         annotationItems: itemSpot,
-                        annotationContent: {spot in
-                        MapAnnotation(coordinate: spot.location) {
-                            ZStack{
-                                Circle ()
-                                    .frame (width: 45)
-                                    .foregroundColor(.black)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
-                                if let uiImage = itemImage {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                    //.scaledToFit()
-                                    // 画像のサイズを調整
-                                        .frame(width: 40, height: 40)
-                                    // 円形にトリミング
-                                        .clipShape(Circle())
-                                    //.foregroundColor(Color(UIColor.systemBackground))
-                                    //.padding()
-                                    //.background(Color.orange.cornerRadius(90))
-                                        .onTapGesture{
-                                            //吹き出し処理
-                                            CalloutView(text: "aiueo")
-                                        }
-                                     
+                        annotationContent: {spot in MapAnnotation(coordinate: spot.location) {
+                        /*
+                         if let uiImage = itemImage{
+                         AssetAnnotationView(image: uiImage)
+                         .onTapGesture {
+                         print("touched")
+                         }
+                         }
+                         */
+                        
+                        
+                        
+                        ZStack{
+                            Circle ()
+                                .frame (width: 45)
+                                .foregroundColor(.black)
+                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+                            
+                            if let uiImage = itemImage {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                //.scaledToFit()
+                                // 画像のサイズを調整
+                                    .frame(width: 40, height: 40)
+                                // 円形にトリミング
+                                    .clipShape(Circle())
+                                //.foregroundColor(Color(UIColor.systemBackground))
+                                //.padding()
+                                //.background(Color.orange.cornerRadius(90))
+                                
+                                    .onTapGesture{
+                                        showCallout = true
+                                        print("tapped")
+                                        print(postDate.count)
+                                    }
+                            }
+                            
+                            if showCallout {
+                                if let itemImage = itemImage{
+                                    CalloutView(text: userInput, itemImage: itemImage, userLocation: locationManager.userLocation, postDate: postDate)
+                                        .zIndex(1)              //上面に表示
+                                        .offset(x: -50, y: -100)   //ここで吹き出しの位置を微調整してる。もっとスマートなやり方はあるかも。吹き出しのサイズが変わればここで位置も変えなあかん
                                 }
                             }
+                            
                         }
                         
+                    
                         
-
-                        })
+                        
+                    }
+                        
+                        
+                        
+                    }
+                    
+                    )
+                        
+                    
+                        
                     .edgesIgnoringSafeArea(.all)
                     //onAppear: Viewが初めて描画されるタイミングで呼ばれるコールバックメソッド
                     //現在地の領域を表示
@@ -286,6 +342,6 @@ struct ContentView: View {
 //プレビュー用
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(itemImage: .constant(nil), itemSpot: .constant([]))
+        ContentView(itemImage: .constant(nil), itemSpot: .constant([]), userInput: .constant(""), postDate: .constant(""))
     }
 }

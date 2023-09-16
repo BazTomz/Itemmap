@@ -11,7 +11,7 @@ import SwiftUI
 struct ItemmapApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(itemImage: .constant(nil), itemSpot: .constant([]))
+            ContentView(itemImage: .constant(nil), itemSpot: .constant([]), userInput: .constant(""), postDate: .constant(""))
         }
     }
 }
