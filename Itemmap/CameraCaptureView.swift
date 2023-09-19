@@ -8,6 +8,17 @@ import SwiftUI
 import UIKit
 import Photos   //投稿画面作成時に追加
 
+extension UIImage {
+
+    func resize(targetSize: CGSize) -> UIImage {
+        return UIGraphicsImageRenderer(size:targetSize).image { _ in
+            self.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
+    }
+
+}
+
+
 //CameraCaptureView という名前の UIViewControllerRepresentable プロトコルに準拠する構造体を宣言
 struct CameraCaptureView: UIViewControllerRepresentable {
     //カメラキャプチャビューがアクティブかどうかを管理
@@ -68,7 +79,14 @@ struct CameraCaptureView: UIViewControllerRepresentable {
             //info[.originalImage] の値が UIImage 型ではなく、キャストできない別の型だった場合、キャストは失敗し、image には nil が代入、このような場合でも、プログラムはクラッシュせずに進行する
             if let image = info[.originalImage] as? UIImage {
                 //画像を保存（撮影された画像データを capturedImage プロパティに保持）
-                parent.capturedImage = image
+                //parent.capturedImage = image
+                parent.capturedImage = image.resize(targetSize: CGSize(width: image.size.width / 10, height: image.size.height / 10))
+                /*
+                if let jpegData = image.jpegData(compressionQuality: 0.0) {
+                        // JPEGデータを保存（圧縮品質0.5）
+                        parent.capturedImage = UIImage(data: jpegData)
+                }
+                 */
             }
             
             //parent:親ビューである CameraCaptureView インスタンスへの参照、Coordinator クラス内で CameraCaptureView のプロパティやメソッドにアクセスできる
@@ -78,8 +96,9 @@ struct CameraCaptureView: UIViewControllerRepresentable {
             // 写真を使用ボタンが押されたら、FoundItemFormView に遷移する
             // 写真、撮影場所、撮影日時をバインディング（投稿画面作成時に追加）
             //let viewController = UIHostingController(rootView: FoundItemFormView(capturedImage: parent.$capturedImage, capturedLocation: parent.$userLocation, capturedDate: parent.$capturedDate))
-            //写真、撮影場所をバインディング
+            //写真、撮影場所をバインディング            
             let viewController = UIHostingController(rootView: FoundItemFormView(capturedImage: parent.$capturedImage, capturedLocation: parent.$userLocation))
+            viewController.modalPresentationStyle = .fullScreen
             picker.present(viewController, animated: true, completion: nil)
         }
         // キャンセル時の処理

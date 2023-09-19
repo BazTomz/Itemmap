@@ -19,6 +19,8 @@ struct FoundItemFormView: View {
     @State private var isMapViewActive = false
     // 住所情報を格納するプロパティ
     @State private var locationAddress: String = ""
+    //日時を格納するプロパティ
+    @State private var postDate: String = ""
     
     // MapView に渡すプロパティ
     @State private var region: MKCoordinateRegion
@@ -45,6 +47,7 @@ struct FoundItemFormView: View {
    let dateFormatter: DateFormatter = {
        let formatter = DateFormatter()
        formatter.dateFormat = "yyyy年MM月dd日 HH時mm分"
+       //formatter.dateFormat = "yyyy/MM/dd　HH:mm"
        return formatter
    }()
     // 画像、撮影場所、撮影日時、入力欄、「投稿」ボタンを縦に配置
@@ -53,7 +56,8 @@ struct FoundItemFormView: View {
             //左揃え
             VStack(alignment: .leading){
                 //Text("日時: \(capturedDate)")
-                Text("日時　\(dateFormatter.string(from: capturedDate))")
+                //Text("日時　\(dateFormatter.string(from: capturedDate))")
+                Text("日時　\(postDate)")
                 
                 if !locationAddress.isEmpty {
                     Text("場所　\(locationAddress)")
@@ -84,7 +88,14 @@ struct FoundItemFormView: View {
                 Button(action: {
                     // ここでデータを投稿する処理を実行
                     // 例: データを送信し、MapViewに遷移する
-                    isMapViewActive = true
+                    //isMapViewActive = true
+                    
+                    //アニメーションの無効化
+                    var transaction = Transaction()
+                    transaction.disablesAnimations = true
+                    withTransaction(transaction) {
+                        isMapViewActive = true
+                    }
                 }) {
                     Text("投稿する")
                         .padding()
@@ -94,7 +105,7 @@ struct FoundItemFormView: View {
                 }
                 .fullScreenCover(isPresented: $isMapViewActive) {
                     //ContentView(itemImage: $capturedImage, itemLocation: $capturedLocation)
-                    ContentView(itemImage: $capturedImage, itemSpot: $itemSpot)
+                    ContentView(itemImage: $capturedImage, itemSpot: $itemSpot, userInput: $userInput, postDate: $postDate, locationAddress: $locationAddress)
                         .onAppear{
                             // capturedLocationがnilでない場合に、itemSpotに新しいItemSpotオブジェクトを追加
                             if let location = capturedLocation {
@@ -106,6 +117,7 @@ struct FoundItemFormView: View {
             }
             .padding()
             .onAppear {
+                postDate = dateFormatter.string(from: capturedDate)
                 if let location = capturedLocation {
                     reverseGeocodeLocation(location)
                 }

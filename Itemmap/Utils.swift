@@ -18,6 +18,12 @@ struct Utils {
     static let screenWidth = UIScreen.main.bounds.width
     static let screenHeight = UIScreen.main.bounds.height
     //ボタンサイズ
-    static let buttonsize = UIScreen.main.bounds.width * 0.15
+    static let buttonsize = screenWidth * 0.15
+    //吹き出しサイズ
+    static let calloutWidth = screenWidth * 0.5
+    static let calloutHeight = calloutWidth * 0.6
+    //mapannotationサイズ
+    static let annotationSize = screenWidth * 0.13
+    static let annotationImageSize = annotationSize * 0.9
 }
 

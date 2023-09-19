@@ -15,6 +15,10 @@ import CoreLocation
 struct ContentView: View {
     @Binding var itemImage: UIImage?
     @Binding var itemSpot: [ItemSpot]
+    @Binding var userInput: String
+    @Binding var postDate: String
+    @Binding var locationAddress: String
+
     
     //画面遷移させるかさせないかの変数
     @State private var isShowNextView = false
@@ -69,7 +73,8 @@ struct ContentView: View {
             )
         }
     }
-    //@State private var showCallout = false
+    //吹き出し
+    @State private var showCallout = false
     
     var body: some View {
         //マップのとボタン類を重ねて表示
@@ -100,16 +105,40 @@ struct ContentView: View {
                         annotationContent: {spot in
                         MapAnnotation(coordinate: spot.location) {
                             ZStack{
+                                Path { path in
+                                    //円の半径
+                                    let radius = Utils.annotationSize / 2
+                                    let centerX = Utils.annotationImageSize / 2
+                                    let arrowHeight = radius * 1.3
+                                    let centerY = Utils.annotationImageSize / 2
+                                    
+                                    // 円を描画
+                                    path.addArc(
+                                        center: CGPoint(x: centerX, y: centerY),
+                                        radius: radius,
+                                        startAngle: Angle(degrees: 50),
+                                        endAngle: Angle(degrees: -230),
+                                        // 円形の描画方向(時計回りならtrue)
+                                        clockwise: true
+                                    )
+                                    // 逆三角形を描画
+                                    path.addLine(to: CGPoint(x: centerX, y: centerY + arrowHeight))
+                                    path.closeSubpath()
+                                }
+                                .fill(Color.forthColor)
+                                .shadow(radius: 5)
+                                /*
                                 Circle ()
                                     .frame (width: 45)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Color.customKeyColor)
                                     .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+                                 */
                                 if let uiImage = itemImage {
                                     Image(uiImage: uiImage)
                                         .resizable()
                                     //.scaledToFit()
                                     // 画像のサイズを調整
-                                        .frame(width: 40, height: 40)
+                                        .frame(width: Utils.annotationImageSize, height: Utils.annotationImageSize)
                                     // 円形にトリミング
                                         .clipShape(Circle())
                                     //.foregroundColor(Color(UIColor.systemBackground))
@@ -117,23 +146,27 @@ struct ContentView: View {
                                     //.background(Color.orange.cornerRadius(90))
                                         .onTapGesture{
                                             //吹き出し処理
-                                            CalloutView(text: "aiueo")
+                                            showCallout = true
                                         }
-                                     
+                                    }
+                                if showCallout {
+                                    if let itemImage = itemImage{
+                                        CalloutView(text: userInput, itemImage: itemImage, userLocation: locationManager.userLocation, postDate: postDate, itemAddress: locationAddress)
+                                        //前面に表示
+                                            .zIndex(1)
+                                        //吹き出しの位置を調整
+                                            .offset(y: -1 *  (Utils.calloutHeight) )
+                                    }
                                 }
-                            }
+                                }
                         }
-                        
-                        
-
                         })
-                    .edgesIgnoringSafeArea(.all)
+                        .edgesIgnoringSafeArea(.all)
                     //onAppear: Viewが初めて描画されるタイミングで呼ばれるコールバックメソッド
                     //現在地の領域を表示
                     .onAppear{
                         updateMapToUserLocation()
                     }
-                    
                     /*
                     //マップを表示・初期表示位置の設定
                     MapView(
@@ -143,8 +176,9 @@ struct ContentView: View {
                         mapNeedsUpdate: $mapNeedupdate
                     )
                     .edgesIgnoringSafeArea(.all)
-                    */
+                    
                     //.frame(width:Utils.screenWidth, height: Utils.screenHeight * 0.8)
+                     */
                     HStack{
                         Spacer()
                         VStack{
@@ -159,13 +193,13 @@ struct ContentView: View {
                                 ZStack {
                                     Circle()
                                     //塗りつぶし
-                                        .fill(Color.white)
+                                        .fill(Color.firstColor)
                                     //ボタンサイズ
                                         .frame(width: Utils.buttonsize)
                                         .padding(10)
                                     Image(systemName:"location")
-                                        .font(.system(size: Utils.screenWidth * 0.15 * 0.3))
-                                        .foregroundColor(.black)
+                                        .font(.system(size: Utils.screenWidth * 0.15 * 0.3, weight: .bold))
+                                        .foregroundColor(Color.secondColor)
                                         .padding()
                                 }
                             }
@@ -189,36 +223,37 @@ struct ContentView: View {
                             ZStack {
                                 Circle()
                                 //塗りつぶし
-                                    .fill(Color.black)
+                                    .fill(Color.forthColor)
                                 //ボタンサイズ
-                                    .frame(width: Utils.buttonsize)
+                                    .frame(width: Utils.buttonsize * 1.1)
                                 /*
                                  //円の外周の枠線
                                  .overlay(
                                  Circle()
                                  //枠線の色と幅を指定
-                                 .strokeBorder(Color.white, lineWidth: Utils.screenWidth * 0.15 * 0.05)
+                                 .strokeBorder(Color.thirdColor, lineWidth: Utils.screenWidth * 0.15 * 0.05)
                                  )
                                  */
                                 //ボタンにSFSymbols画像の表示
                                 Image(systemName:"plus")
-                                    .font(.system(size: Utils.screenWidth * 0.15 * 0.3))
-                                    .foregroundColor(.white)
+                                    .font(.system(size: Utils.screenWidth * 0.15 * 0.3, weight: .bold))
+                                    .foregroundColor(Color.secondColor)
                                     .padding()
                             }
                         }
                          //ボタンに影をつける
-                         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+                         .shadow(color: Color.forthColor.opacity(0.2), radius: 5, x: 0, y: 5)
                          
                         //カメラを起動
                         //.sheetモディファイア:ビューのシート表示, 引数としてisPresentedを取る
                         //isShowNextViewの値が trueのとき、指定された CameraCaptureViewがシートとして表示される
                         //CameraCaptureViewにisActiveとcapturedImageという2つのバインディングを引数として渡す
                         //userLocation（撮影場所）, capturedData（撮影日時） という2つのバインディングも追加（投稿画面作成時に追加）
-                        .sheet(isPresented: $isShowNextView) {
+                        .fullScreenCover(isPresented: $isShowNextView) {
                             //CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage, userLocation: $locationManager.userLocation, capturedDate: capturedDate)
                             //CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage, userLocation: $locationManager.userLocation)
                             CameraCaptureView(isActive: $isCameraActive, userLocation: $locationManager.userLocation)
+                                .edgesIgnoringSafeArea(.all)
                         }
                     }
                 }
@@ -228,64 +263,9 @@ struct ContentView: View {
                         
                     }
                     
-/*
-                ZStack{
-                    // 下部のスペース
-                    Rectangle()
-                        .fill(Color.clear)
-                    // 適切な高さに調整
-                        .frame(height: Utils.screenWidth * 0.2)
-                    // +ボタンの配置と押下時のアクション
-                    Button(action: {
-                        //bool値を反転（トグル）
-                        isButtonPressed.toggle()
-                        isShowNextView = true
-                        isCameraActive = true
-                    }) {
-                    //ボタンの表示
-                         ZStack {
-                            Circle()
-                            //塗りつぶし
-                                .fill(Color.black)
-                            //ボタンサイズ
-                                .frame(width: Utils.buttonsize)
-                             /*
-                            //円の外周の枠線
-                                .overlay(
-                                    Circle()
-                                    //枠線の色と幅を指定
-                                        .strokeBorder(Color.white, lineWidth: Utils.screenWidth * 0.15 * 0.05)
-                                )
-                              */
-                            //ボタンにSFSymbols画像の表示
-                            Image(systemName:"plus")
-                                 .font(.system(size: Utils.screenWidth * 0.15 * 0.3))
-                                .foregroundColor(.white)
-                                .padding()
-                        }
-                    }
-                    /*
-                    //ボタンに影をつける
-                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
-                    */
-                    //カメラを起動
-                    //.sheetモディファイア:ビューのシート表示, 引数としてisPresentedを取る
-                    //isShowNextViewの値が trueのとき、指定された CameraCaptureViewがシートとして表示される
-                    //CameraCaptureViewにisActiveとcapturedImageという2つのバインディングを引数として渡す
-                    //userLocation（撮影場所）, capturedData（撮影日時） という2つのバインディングも追加（投稿画面作成時に追加）
-                    .sheet(isPresented: $isShowNextView) {
-                        //CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage)
-                        CameraCaptureView(isActive: $isCameraActive, capturedImage: $capturedImage, userLocation: $locationManager.userLocation, capturedDate: capturedDate)
-                    }
-                }
-            }
-        }
-    }
-}
-*/
 //プレビュー用
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(itemImage: .constant(nil), itemSpot: .constant([]))
+        ContentView(itemImage: .constant(nil), itemSpot: .constant([]), userInput: .constant(""), postDate: .constant(""), locationAddress: .constant(""))
     }
 }

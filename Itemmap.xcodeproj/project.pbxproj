@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA4E2CCF2AB94D22009245F2 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4E2CCE2AB94D22009245F2 /* ColorExtension.swift */; };
 		BA9D4A472A8B9D450001E507 /* ItemmapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4A462A8B9D450001E507 /* ItemmapApp.swift */; };
 		BA9D4A492A8B9D450001E507 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D4A482A8B9D450001E507 /* ContentView.swift */; };
 		BA9D4A4B2A8B9D460001E507 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9D4A4A2A8B9D460001E507 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA4E2CCE2AB94D22009245F2 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		BA9D4A432A8B9D450001E507 /* Itemmap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Itemmap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9D4A462A8B9D450001E507 /* ItemmapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemmapApp.swift; sourceTree = "<group>"; };
 		BA9D4A482A8B9D450001E507 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				BA9D4B372AAEFA1C0001E507 /* LocationManager.swift */,
 				BA9D4B3F2AB2BF6F0001E507 /* Mappin.swift */,
 				BA9D4B3D2AAF5C270001E507 /* Utils.swift */,
+				BA4E2CCE2AB94D22009245F2 /* ColorExtension.swift */,
 				BA9D4A4A2A8B9D460001E507 /* Assets.xcassets */,
 				BA9D4A4C2A8B9D460001E507 /* Preview Content */,
 			);
@@ -280,6 +283,7 @@
 				BA9D4B342A94E2CB0001E507 /* FoundItemFormView.swift in Sources */,
 				BA9D4B3A2AAF437D0001E507 /* MapView.swift in Sources */,
 				BA9D4A492A8B9D450001E507 /* ContentView.swift in Sources */,
+				BA4E2CCF2AB94D22009245F2 /* ColorExtension.swift in Sources */,
 				BA9D4B3E2AAF5C270001E507 /* Utils.swift in Sources */,
 				BA9D4B402AB2BF6F0001E507 /* Mappin.swift in Sources */,
 				BA9D4B382AAEFA1C0001E507 /* LocationManager.swift in Sources */,
@@ -459,7 +463,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.BazTomz.Itemmap;
+				PRODUCT_BUNDLE_IDENTIFIER = com.BazTomz.Itemmap20230918;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -491,7 +495,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.BazTomz.Itemmap;
+				PRODUCT_BUNDLE_IDENTIFIER = com.BazTomz.Itemmap20230918;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
